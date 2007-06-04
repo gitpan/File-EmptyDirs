@@ -1,0 +1,5 @@
+MANIFEST
+Makefile.PL
+t/0.t
+lib/File/EmptyDirs.pm
+META.yml                                 Module meta-data (added by MakeMaker)
