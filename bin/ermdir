@@ -1,0 +1,38 @@
+#!/usr/bin/perl -w
+use strict;
+use File::EmptyDirs 'remove_empty_dirs';
+scalar @ARGV or die('missing dir args');
+
+for my $d (@ARGV){
+   -d $d or die("$d not a dir");
+   remove_empty_dirs($d);
+}
+
+exit;
+
+__END__
+
+=pod
+
+=head1 NAME
+
+ermdir - remove empty directories recursively
+
+=head1 DESCRTIPTION
+
+Finds all empty directories recursively and deletes them.
+
+=head1 USAGE EXAMPLES
+
+   ermdir ./
+   ermdir /home/myself/
+
+=head1 SEE ALSO
+
+File::EmptyDirs
+
+=head1 AUTHOR
+
+Leo Charre 
+
+=cut

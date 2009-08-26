@@ -4,7 +4,7 @@ use lib './lib';
 use File::EmptyDirs 'remove_empty_dirs';
 use File::Find::Rule;
 use Cwd;
-use Smart::Comments '###';
+#use Smart::Comments '###';
 
 
 mkdir cwd().'/t/emptyhere';
@@ -30,4 +30,4 @@ my @ed2 = File::Find::Rule->directory->in(cwd.'/t/emptyhere');
 ok( (scalar @ed2  == 1),'no dirs now except for t');
 ### @ed2
 
-
+rmdir cwd().'/t/emptyhere';

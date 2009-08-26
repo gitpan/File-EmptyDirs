@@ -1,5 +1,8 @@
+Changes
 MANIFEST
 Makefile.PL
-t/0.t
+README
+bin/ermdir
 lib/File/EmptyDirs.pm
+t/0.t
 META.yml                                 Module meta-data (added by MakeMaker)
