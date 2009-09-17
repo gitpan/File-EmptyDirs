@@ -21,7 +21,9 @@ delete /home/myself if it is an empty dir.
 
 INSTALLATION
 
-See INSTALL.
+perl Makefile.PL
+make test
+make install
 
 DEPENDENCIES
 
@@ -30,8 +32,10 @@ DEPENDENCIES
    Exporter
    File::Find::Rule
    File::Find::Rule::DirectoryEmpty
+   File::Path
+   LEOCHARRE::CLI2
    Smart::Comments
-   Test::Simple
+   Test::Simple   
 
 COPYRIGHT AND LICENCE
 

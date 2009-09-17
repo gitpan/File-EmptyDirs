@@ -1,3 +1,16 @@
+2009-09-17 17:27  cvs
+
+	* bin/ermdir, lib/File/EmptyDirs.pm: Cleaned up code in main
+	  module, cleaned up documentation.  Explained what
+	  remove_empty_dirs() returns.	Added scalar and list context
+	  return to remove_empty_dirs(), in list context, returns the abs
+	  paths to the dirs removed, in scalar, count of dirs removed.
+
+	  Improved ermdir, added proper gnulike documentation- added debug
+	  feature, tells you what happened, etc.
+
+	  Made sure perl license shows up properly.
+
 2009-08-26 14:18  cvs
 
 	* lib/File/EmptyDirs.pm: Updated docs, made sure license is perl

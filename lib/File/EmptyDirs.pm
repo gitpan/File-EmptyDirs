@@ -3,41 +3,46 @@ use strict;
 use Carp;
 require Exporter;
 use vars (qw(@ISA @EXPORT_OK $VERSION));
+use File::Find::Rule::DirectoryEmpty;
+use Cwd;
+
 @ISA = qw(Exporter);
 @EXPORT_OK = qw(remove_empty_dirs);
-$VERSION = sprintf "%d.%02d", q$Revision: 1.4 $ =~ /(\d+)/g;
-use File::Find::Rule::DirectoryEmpty;
-
+$VERSION = sprintf "%d.%02d", q$Revision: 1.5 $ =~ /(\d+)/g;
 
 sub remove_empty_dirs {
 	my $abs = shift;
 	-d $abs or Carp::cluck("argument [$abs] is not a dir.") and return;
 
-	my $empty_dirs_removed = 0;	
-	my $found_empty_dir=1; #startflag
-   
-   require Cwd;	
-	while ($found_empty_dir){
-		 $found_empty_dir=0;
+   my @empty_dirs_removed;
+
+
+	my $found_empty_subdirs=1; # startflag  
+	while ($found_empty_subdirs){
+		 $found_empty_subdirs=0; # assume we will not find empty subdirs to continue with
 		 
 	
-		my @ed = File::Find::Rule::DirectoryEmpty->directoryempty->in($abs) ;
+		my @empty_dirs = File::Find::Rule::DirectoryEmpty->directoryempty->in($abs) ;
 
-		if (scalar @ed){
-			EMPTY_DIR: for (@ed){
-				my $d = $_;
+		#if (scalar @empty_dirs){
+
+			EMPTY_DIR: for my $d (@empty_dirs){
+				
 				next if (Cwd::abs_path($d) eq Cwd::abs_path($abs));
-				$found_empty_dir++;	
+
+				$found_empty_subdirs++;	
             
-				rmdir($_) 
-               or Carp::cluck("cannot rmdir $_, check permissions? $!")
+				rmdir($d) 
+               or Carp::cluck("cannot rmdir '$d', check permissions? '$!'")
                and next EMPTY_DIR;
-            $empty_dirs_removed++;	
+
+            push @empty_dirs_removed, $d;            
 			}	
-		}
+		#}
 	}
 
-	$empty_dirs_removed;
+   wantarray ? ( @empty_dirs_removed ) : ( scalar @empty_dirs_removed );
+
 }
 
 1;
@@ -54,7 +59,9 @@ File::EmptyDirs - find all empty directories in a path and remove recursively
 
 	use File::EmptyDirs 'remove_empty_dirs';
    
-	remove_empty_dirs('/home/myself');
+	my @abs_dirs_removed = remove_empty_dirs('/home/myself');
+   
+   my $count_removed = remove_empty_dirs('/home/otherself');
 
 =head1 DESCRIPTION
 
@@ -67,6 +74,7 @@ For example.. If you have..
 
 And the only thing in this is 'nada', and 'nada' does not contain anything, you'd like
 to remove both of those. This is what to use.
+Remove empty directories recursively.
 
 Nothing exported by default.
 
@@ -80,7 +88,9 @@ delete /home/myself if it is an empty dir.
 Argument is an abs path to a directory.
 Will remove all empty directories within that filesystem hierarchy, recursively.
 
-Returns number of dirs removed.
+Returns number of dirs removed in scalar context.
+In list context, returns abs paths to dirs removed.
+
 Returns undef on failure.
 
 =head1 SEE ALSO
