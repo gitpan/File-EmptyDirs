@@ -1,9 +1,8 @@
-File::EmptyDirs 
-===============================================
-Find all empty directories in a path and remove recursively.
+File::EmptyDirs  - Find all empty directories in a path and remove recursively.
+===============================================================================
 
-Ever end up with some miscellaneous empty directories in a messy filesystem and you
-just want to clean up all empty dirs?
+Ever end up with some miscellaneous empty directories in a messy filesystem and
+you just want to clean up all empty dirs?
 
 For example.. If you have..
 
@@ -16,7 +15,6 @@ Nothing exported by default.
 
 The operation  is self exclusive, that is, if you pass dir /home/myself, it will not
 delete /home/myself if it is an empty dir.
-
 
 
 INSTALLATION
@@ -39,7 +37,7 @@ DEPENDENCIES
 
 COPYRIGHT AND LICENCE
 
-Copyright (C) 2009 by Leo Charre leocharre at cpan dot org
+Copyright (C) 2010 by Leo Charre leocharre at cpan dot org
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.8.8 or,

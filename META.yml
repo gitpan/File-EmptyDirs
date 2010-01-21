@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:               File-EmptyDirs
-version:            1.05
+version:            1.06
 abstract:           find all empty directories in a path and remove recursively
 author:
     - Leo Charre leocharre at cpan dot org
@@ -18,7 +18,6 @@ requires:
     File::Find::Rule::DirectoryEmpty:  1.11
     File::Path:           1.08
     LEOCHARRE::CLI2:      1.07
-    Smart::Comments:      1
     Test::Simple:         0
 no_index:
     directory:

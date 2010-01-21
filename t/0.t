@@ -4,7 +4,6 @@ use lib './lib';
 use File::EmptyDirs 'remove_empty_dirs';
 use File::Find::Rule;
 use Cwd;
-#use Smart::Comments '###';
 
 
 mkdir cwd().'/t/emptyhere';

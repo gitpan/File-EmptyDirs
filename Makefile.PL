@@ -16,7 +16,6 @@ WriteMakefile(
       'File::Find::Rule::DirectoryEmpty'  => '1.11',
       'File::Path'                        => '1.08',
       'LEOCHARRE::CLI2'                   => '1.07',
-      'Smart::Comments'                   => '1',
       'Test::Simple'                      => '0',
    },
    

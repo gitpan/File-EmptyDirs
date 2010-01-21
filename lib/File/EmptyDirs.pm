@@ -2,13 +2,12 @@ package File::EmptyDirs;
 use strict;
 use Carp;
 require Exporter;
-use vars (qw(@ISA @EXPORT_OK $VERSION));
+use vars qw/@ISA @EXPORT_OK $VERSION/;
 use File::Find::Rule::DirectoryEmpty;
 use Cwd;
-
-@ISA = qw(Exporter);
-@EXPORT_OK = qw(remove_empty_dirs);
-$VERSION = sprintf "%d.%02d", q$Revision: 1.5 $ =~ /(\d+)/g;
+@ISA = qw/Exporter/;
+@EXPORT_OK = qw/remove_empty_dirs/;
+$VERSION = sprintf "%d.%02d", q$Revision: 1.6 $ =~ /(\d+)/g;
 
 sub remove_empty_dirs {
 	my $abs = shift;
@@ -19,26 +18,22 @@ sub remove_empty_dirs {
 
 	my $found_empty_subdirs=1; # startflag  
 	while ($found_empty_subdirs){
-		 $found_empty_subdirs=0; # assume we will not find empty subdirs to continue with
+	   $found_empty_subdirs=0; # assume we will not find empty subdirs to continue with
 		 
-	
 		my @empty_dirs = File::Find::Rule::DirectoryEmpty->directoryempty->in($abs) ;
 
-		#if (scalar @empty_dirs){
+      EMPTY_DIR: for my $d (@empty_dirs){
+         
+         next if (Cwd::abs_path($d) eq Cwd::abs_path($abs));
 
-			EMPTY_DIR: for my $d (@empty_dirs){
-				
-				next if (Cwd::abs_path($d) eq Cwd::abs_path($abs));
+         $found_empty_subdirs++;	
+         
+         rmdir($d) 
+            or Carp::cluck("cannot rmdir '$d', check permissions? '$!'")
+            and next EMPTY_DIR;
 
-				$found_empty_subdirs++;	
-            
-				rmdir($d) 
-               or Carp::cluck("cannot rmdir '$d', check permissions? '$!'")
-               and next EMPTY_DIR;
-
-            push @empty_dirs_removed, $d;            
-			}	
-		#}
+         push @empty_dirs_removed, $d;            
+      }
 	}
 
    wantarray ? ( @empty_dirs_removed ) : ( scalar @empty_dirs_removed );
@@ -105,7 +100,7 @@ Leo Charre leocharre at cpan dot org
 
 =head1 COPYRIGHT
 
-Copyright (c) 2009 Leo Charre. All rights reserved.
+Copyright (c) 2010 Leo Charre. All rights reserved.
 
 =head1 LICENSE
 
